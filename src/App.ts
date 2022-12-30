@@ -1,0 +1,178 @@
+import BaseApp from "./BaseApp.js";
+import FS from "fs-extra-promise";
+import Base from "./classes/FileDesign/Base.js";
+import Logger from "./utils/Logger.js";
+import { Dependency } from "./types/Dependency.js";
+import ChildProcess from "child_process";
+import { inject } from "./types/Decorators.js";
+import "reflect-metadata";
+
+class App extends BaseApp {
+  constructor() {
+    super();
+    this.load("../../addons");
+  }
+
+  async load(folder: string) {
+    // load all module folders
+    const foldersLoaded = await this.loadFolders(folder);
+    if (!foldersLoaded) {
+      return false;
+    }
+
+    // load all the head files from the modules
+    const headFilesLoaded = await this.loadHeadFiles();
+    if (!headFilesLoaded) {
+      return false;
+    }
+
+    const npmPackages = await Promise.all(
+      this.preloadedFolders.map((x) => this.loadNpmPackages(x))
+    );
+    if (!npmPackages.every((x) => x)) {
+      Logger.internalError(
+        "Cannot load all npm packages for one or more of your addons!"
+      );
+      return false;
+    }
+
+    // ensure the dependencies are loaded too
+    for (const head of this.preloadedHeadFiles.values()) {
+      const dependencies = head.getDependencies();
+      let hasAllDependencies = true;
+      const missingDependencies: Dependency[] = [];
+      for (const dependency of dependencies) {
+        const hasDependency = await this.ensurePreloadedDependency(dependency);
+        if (!hasDependency) {
+          if (hasAllDependencies) hasAllDependencies = false;
+          missingDependencies.push(dependency);
+        }
+      }
+      if (!hasAllDependencies) {
+        head.setLoad(false);
+        Logger.userError(
+          `Cannot load ${
+            head.name
+          }! Please remove or fix. Missing dependencies: \n${missingDependencies
+            .map((x) => Dependency[x])
+            .map((x) =>
+              x
+                .split("_")
+                .map((y) => y[0].toUpperCase() + y.slice(1).toLowerCase())
+                .join(" ")
+            )
+            .join("\n")}`
+        );
+      }
+    }
+
+    // inject dependencies
+    for (const head of this.preloadedHeadFiles.values()) {
+      const keys = Object.getOwnPropertyNames(head);
+      for (const key of keys) {
+        const data = Reflect.getMetadata(key, head);
+        if (!data) continue;
+        const val = data[key].injectWith as Dependency | null;
+        if (val === null) continue;
+        const dependency = this.preloadedHeadFiles.get(val);
+        if (!dependency) continue;
+        Object.assign(head, {
+          [key]: dependency,
+        });
+      }
+    }
+
+    // load all files
+    for (const head of this.preloadedHeadFiles.values()) {
+      if (!head.load) continue;
+      const isLoadedAlready = await this.ensureDependency(head.type);
+      if (isLoadedAlready) continue;
+      const loaded = await this.initModule(head.type);
+      if (!loaded) {
+        Logger.internalError(`Cannot load ${head.name}!`);
+        continue;
+      }
+    }
+    return true;
+  }
+
+  protected loadNpmPackages(folder: string): Promise<boolean> {
+    return new Promise(async (resolve, reject) => {
+      const isPackageJson = await FS.existsAsync(
+        `../../addons/${folder}/package.json`
+      );
+      if (!isPackageJson) return resolve(true);
+      const childProcess = ChildProcess.spawn(`npm install --save`, {
+        cwd: `../../addons/${folder}`,
+        env: process.env,
+        stdio: "inherit",
+      });
+      childProcess.once("exit", () => {
+        return resolve(true);
+      });
+      childProcess.once("error", () => {
+        return resolve(false);
+      });
+    });
+  }
+
+  protected async initModule(type: Dependency): Promise<boolean> {
+    const head = this.preloadedHeadFiles.get(type);
+    if (!head) {
+      Logger.internalError(`Cannot find head file for ${Dependency[type]}!`);
+      return false;
+    }
+
+    const dependencies = head.getDependencies();
+    for (const dependency of dependencies) {
+      const isLoadedAlready = await this.ensureDependency(dependency);
+      if (isLoadedAlready) continue;
+      const loaded = await this.initModule(dependency);
+      if (!loaded) {
+        return false;
+      }
+    }
+    head.init();
+    this.loaded.push(head);
+    return true;
+  }
+
+  protected async loadFolders(folder: string) {
+    const subfolders = await FS.readdirAsync(folder);
+    for (const folder in subfolders) {
+      const isFolder = FS.statSync(subfolders[folder]).isDirectory();
+      if (!isFolder) {
+        delete subfolders[folder];
+      }
+    }
+    this.preloadedFolders.push(...subfolders.filter((x) => x !== undefined));
+    return true;
+  }
+
+  protected async loadHeadFiles(): Promise<boolean> {
+    for (const folder of this.preloadedFolders) {
+      try {
+        const headFile: Base = await import(
+          `../../addons/${folder}/out/index.js`
+        );
+        this.preloadedHeadFiles.set(headFile.type, headFile);
+      } catch (e) {
+        Logger.internalError((e as Error).message, (e as Error).stack);
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public async ensurePreloadedDependency(
+    dependency: Dependency
+  ): Promise<boolean> {
+    return this.preloadedHeadFiles.has(dependency);
+  }
+
+  public async ensureDependency(dependency: Dependency): Promise<boolean> {
+    return this.loaded.some((x) => x.type === dependency);
+  }
+}
+
+export default App;

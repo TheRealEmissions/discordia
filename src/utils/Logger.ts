@@ -1,38 +1,46 @@
+import Chalk from "chalk";
+
 class Logger {
-  static internalError(message: string, ...optionalParams: any[]) {
-    console.error(
-      "-----------------------------------------------------------------"
-    );
-    console.error("PLEASE REPORT TO DEVELOPER");
-    console.error(
-      "-----------------------------------------------------------------"
-    );
-    console.error("   ");
-    console.error(message, ...optionalParams);
-    console.error("   ");
-    console.error(
-      "-----------------------------------------------------------------"
-    );
-    console.error("PLEASE REPORT TO DEVELOPER");
-    console.error(
-      "-----------------------------------------------------------------"
+  private static getTimestamp() {
+    return new Date().toLocaleString();
+  }
+
+  private static getDateString(): string;
+  private static getDateString(type?: string): string;
+  private static getDateString(type?: string): string {
+    return Chalk.cyan.bold(
+      `[${this.getTimestamp()}]${type ? ` ${type}` : ""} => `
     );
   }
 
-  static userError(message: string, ...optionalParams: any[]) {
-    console.error(
-      "-----------------------------------------------------------------"
+  static internalError(
+    message: string,
+    type?: string,
+    ...optionalParams: any[]
+  ) {
+    console.log(" ");
+    console.log(
+      Chalk.red.bold(`[INTERNAL ERROR] ${this.getDateString(type)} => `)
     );
-    console.error(message, ...optionalParams);
-    console.error(
-      "-----------------------------------------------------------------"
-    );
+    if (message) console.error(Chalk.red(message, ...optionalParams));
+    console.log(Chalk.redBright.bold("REPORT TO DEVELOPER!"));
+    console.log(Chalk.red.bold(`[/INTERNAL ERROR]`));
+    console.log(" ");
   }
 
-  static log(message: string, ...optionalParams: any[]) {
-    console.debug("--- LOG ---");
-    console.debug(message, ...optionalParams);
-    console.debug("--- LOG ---");
+  static userError(message: string, type?: string, ...optionalParams: any[]) {
+    console.log(" ");
+    console.log(Chalk.red.bold(`[USER ERROR] ${this.getDateString(type)} => `));
+    if (message) console.error(Chalk.red(message, ...optionalParams));
+    console.log(Chalk.red.bold(`[/USER ERROR]`));
+    console.log(" ");
+  }
+
+  static log(message: string, type?: string, ...optionalParams: any[]) {
+    console.log(
+      this.getDateString(type),
+      Chalk.yellow(message, ...optionalParams)
+    );
   }
 }
 

@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@tsconfig/node18": "^1.0.1",
+    "chalk": "^5.2.0",
     "esm": "^3.2.25",
     "fs-extra-promise": "^1.0.1",
     "reflect-metadata": "^0.1.13"

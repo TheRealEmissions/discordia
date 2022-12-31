@@ -103,17 +103,31 @@ class App extends BaseApp {
         `./addons/${folder}/package.json`
       );
       if (!isPackageJson) return resolve(true);
-      const childProcess = ChildProcess.spawn(`npm install --save`, {
-        cwd: `./addons/${folder}`,
-        env: process.env,
-        stdio: "inherit",
-      });
-      childProcess.once("exit", () => {
-        return resolve(true);
-      });
-      childProcess.once("error", () => {
-        return resolve(false);
-      });
+
+      ChildProcess.exec(
+        `cd "./addons/${folder}" && npm install`,
+        (err, stdout, stderr) => {
+          if (err) {
+            Logger.internalError(`Cannot load npm packages for ${folder}!`);
+            return resolve(false);
+          }
+          Logger.log(stdout);
+          return resolve(true);
+        }
+      );
+
+      // const childProcess = ChildProcess.spawn(`npm install`, {
+      //   cwd: `./addons/${folder}`,
+      // });
+      // childProcess.on("message", (m, handle) => {
+      //   Logger.log(m.toString());
+      // });
+      // childProcess.once("exit", () => {
+      //   return resolve(true);
+      // });
+      // childProcess.once("error", () => {
+      //   return resolve(false);
+      // });
     });
   }
 
@@ -156,9 +170,9 @@ class App extends BaseApp {
   protected async loadHeadFiles(): Promise<boolean> {
     for (const folder of this.preloadedFolders) {
       try {
-        const headFile: Base = await import(
-          `../../addons/${folder}/out/index.js`
-        );
+        const headFile: Base = (
+          await import(`../../addons/${folder}/out/index.js`)
+        ).default;
         Logger.log(
           "Loaded head file // ",
           headFile.name,

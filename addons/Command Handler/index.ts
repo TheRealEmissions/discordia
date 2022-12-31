@@ -1,2 +1,2 @@
-import App from "./src/App";
-export const app = new App();
+import App from "./src/App.js";
+export default new App();

@@ -1,5 +1,6 @@
 import { HeadFile } from "ts-modular-bot-file-design";
-import { Decorators, Dependency } from "ts-modular-bot-types";
+import { Dependencies, Dependency } from "ts-modular-bot-types";
+import { app as Events } from "events-types";
 
 abstract class BaseApp extends HeadFile {
   constructor() {
@@ -10,9 +11,15 @@ abstract class BaseApp extends HeadFile {
   name: string = "Command Handler";
   load = true;
 
+  @Dependencies.inject(Dependency.DISCORD_CLIENT)
+  static Client: object;
+
+  @Dependencies.inject(Dependency.EVENTS)
+  static Events: typeof Events;
+
   abstract init(): void;
   getDependencies(): Dependency[] {
-    return [];
+    return [Dependency.EVENTS, Dependency.DISCORD_CLIENT];
   }
 }
 

@@ -1,10 +1,13 @@
-import BaseApp from "./BaseApp";
+import BaseApp from "./BaseApp.js";
 class App extends BaseApp {
   constructor() {
     super();
   }
   init() {
-    console.log("Hello World!");
+    BaseApp.Events.events.emit(
+      BaseApp.Events.GeneralEvents.INFO,
+      "Command Handler Loaded"
+    );
   }
 }
 

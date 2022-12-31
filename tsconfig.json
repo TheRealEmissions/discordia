@@ -5,7 +5,7 @@
     "allowSyntheticDefaultImports": true,
     "lib": ["ES2022"],
     "module": "ESNext",
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "Node",
     "target": "ES2022",
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -20,5 +20,5 @@
     "removeComments": true
   },
   "include": ["./**/*"],
-  "exclude": ["./node_modules/**/*", "./out/**/*", "*/node_modules/**/*", "*/package-lock.json"]
+  "exclude": ["./node_modules/**/*", "*/out/**/*", "*/node_modules/**/*", "*/package-lock.json", "./addons"]
 }

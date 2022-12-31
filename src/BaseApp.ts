@@ -1,5 +1,5 @@
-import Base from "./classes/FileDesign/Base";
-import { Dependency } from "./types/Dependency";
+import Base from "./classes/FileDesign/Base.js";
+import { Dependency } from "./types/Dependency.js";
 
 export type HeadFiles = Map<Dependency, Base>;
 

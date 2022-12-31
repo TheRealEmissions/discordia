@@ -28,6 +28,12 @@ class Logger {
       "-----------------------------------------------------------------"
     );
   }
+
+  static log(message: string, ...optionalParams: any[]) {
+    console.debug("--- LOG ---");
+    console.debug(message, ...optionalParams);
+    console.debug("--- LOG ---");
+  }
 }
 
 export default Logger;

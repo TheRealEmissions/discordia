@@ -4,13 +4,13 @@ import Base from "./classes/FileDesign/Base.js";
 import Logger from "./utils/Logger.js";
 import { Dependency } from "./types/Dependency.js";
 import ChildProcess from "child_process";
-import { inject } from "./types/Decorators.js";
 import "reflect-metadata";
+import Path from "path";
 
 class App extends BaseApp {
   constructor() {
     super();
-    this.load("../../addons");
+    this.load(Path.resolve("./addons"));
   }
 
   async load(folder: string) {
@@ -39,6 +39,7 @@ class App extends BaseApp {
     // ensure the dependencies are loaded too
     for (const head of this.preloadedHeadFiles.values()) {
       const dependencies = head.getDependencies();
+      Logger.log(`Head: ${head.name} | Dependencies: ${dependencies}`);
       let hasAllDependencies = true;
       const missingDependencies: Dependency[] = [];
       for (const dependency of dependencies) {
@@ -99,11 +100,11 @@ class App extends BaseApp {
   protected loadNpmPackages(folder: string): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
       const isPackageJson = await FS.existsAsync(
-        `../../addons/${folder}/package.json`
+        `./addons/${folder}/package.json`
       );
       if (!isPackageJson) return resolve(true);
       const childProcess = ChildProcess.spawn(`npm install --save`, {
-        cwd: `../../addons/${folder}`,
+        cwd: `./addons/${folder}`,
         env: process.env,
         stdio: "inherit",
       });
@@ -139,8 +140,11 @@ class App extends BaseApp {
 
   protected async loadFolders(folder: string) {
     const subfolders = await FS.readdirAsync(folder);
+    Logger.log(`Subfolders: ${subfolders}`);
     for (const folder in subfolders) {
-      const isFolder = FS.statSync(subfolders[folder]).isDirectory();
+      const isFolder = FS.statSync(
+        `./addons/${subfolders[folder]}`
+      ).isDirectory();
       if (!isFolder) {
         delete subfolders[folder];
       }
@@ -155,10 +159,16 @@ class App extends BaseApp {
         const headFile: Base = await import(
           `../../addons/${folder}/out/index.js`
         );
+        Logger.log(
+          "Loaded head file // ",
+          headFile.name,
+          " // ",
+          headFile.type
+        );
         this.preloadedHeadFiles.set(headFile.type, headFile);
       } catch (e) {
         Logger.internalError((e as Error).message, (e as Error).stack);
-        return false;
+        continue;
       }
     }
     return true;

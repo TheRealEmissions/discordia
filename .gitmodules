@@ -1,15 +1,9 @@
 [submodule "addons/Discord Client"]
 	path = addons/Discord Client
 	url = https://github.com/TheRealEmissions/ts-modular-bot-addon-discord_client
-[submodule "addons/Events"]
-  path = addons/Events
-	url = https://github.com/TheRealEmissions/ts-modular-bot-addon-events
 [submodule "addons/Template"]
   path = addons/Template
 	url = https://github.com/TheRealEmissions/ts-modular-bot-addon-template
-[submodule "addons/Command Handler"]
-	path = addons/Command Handler
-	url = https://github.com/TheRealEmissions/ts-modular-bot-addon-command_handler
 [submodule "src/classes/FileDesign"]
 	path = src/classes/FileDesign
 	url = https://github.com/TheRealEmissions/ts-modular-bot-file-design
@@ -19,3 +13,9 @@
 [submodule "src/utils/Logger"]
 	path = src/utils/Logger
 	url = https://github.com/TheRealEmissions/ts-logger
+[submodule "addons/Command Handler"]
+  path = addons/Command Handler
+	url = https://github.com/TheRealEmissions/ts-modular-bot-addon-command_handler
+[submodule "addons/Events"]
+  path = addons/Events
+	url = https://github.com/TheRealEmissions/ts-modular-bot-addon-events

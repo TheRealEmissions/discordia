@@ -14,8 +14,8 @@
 	path = src/utils/Logger
 	url = https://github.com/TheRealEmissions/ts-logger
 [submodule "addons/Command Handler"]
-  path = addons/Command Handler
+	path = addons/Command Handler
 	url = https://github.com/TheRealEmissions/ts-modular-bot-addon-command_handler
 [submodule "addons/Events"]
-  path = addons/Events
+	path = addons/Events
 	url = https://github.com/TheRealEmissions/ts-modular-bot-addon-events

@@ -10,12 +10,12 @@
 [submodule "addons/Command Handler"]
 	path = addons/Command Handler
 	url = https://github.com/TheRealEmissions/ts-modular-bot-addon-command_handler
-[submodule "src/utils/Logger"]
-	path = src/utils/Logger
-	url = https://github.com/TheRealEmissions/ts-logger
 [submodule "src/classes/FileDesign"]
 	path = src/classes/FileDesign
 	url = https://github.com/TheRealEmissions/ts-modular-bot-file-design
 [submodule "src/types"]
 	path = src/types
 	url = https://github.com/TheRealEmissions/ts-modular-bot-types
+[submodule "src/utils/Logger"]
+	path = src/utils/Logger
+	url = https://github.com/TheRealEmissions/ts-logger

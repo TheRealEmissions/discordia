@@ -1,26 +1,9 @@
 import BaseApp from "./BaseApp.js";
-import { DiscordEvents, GeneralEvents } from "./enums/CommonEvents.js";
+import { GeneralEvents, DiscordEvents } from "./enums/CommonEvents.js";
 import { EventTypes } from "./enums/EventTypes.js";
-import Events from "./events/General.js";
 
-class App extends BaseApp {
-  loadedEvents: any[] = [];
-  events: any[] = [];
-  constructor() {
-    super();
-    this.events = [new Events()];
-  }
-
-  // @App.bind(GeneralEvents.INFO, EventTypes.ON)
-  // info(message: string) {
-  //   console.debug("EVENTS => INFO => ", message);
-  // }
-
-  init() {
-    BaseApp.events.emit(GeneralEvents.INFO, "Events loaded");
-  }
-
-  bind(
+class Decorators {
+  static bind(
     eventName: GeneralEvents | DiscordEvents | string,
     type: EventTypes = EventTypes.ON
   ) {
@@ -45,4 +28,4 @@ class App extends BaseApp {
   }
 }
 
-export default App;
+export default Decorators;

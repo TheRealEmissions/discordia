@@ -1,11 +1,11 @@
 import BaseApp from "./BaseApp.js";
 import FS from "fs-extra-promise";
 import Base from "./classes/FileDesign/Base.js";
-import Logger from "./utils/Logger.js";
-import { Dependency } from "./types/Dependency.js";
+import Logger from "./utils/Logger/Logger.js";
 import ChildProcess from "child_process";
 import "reflect-metadata";
 import Path from "path";
+import { Dependency, Dependencies } from "ts-modular-bot-types";
 
 class App extends BaseApp {
   constructor() {
@@ -69,15 +69,16 @@ class App extends BaseApp {
 
     // inject dependencies
     for (const head of this.preloadedHeadFiles.values()) {
-      const keys = Object.getOwnPropertyNames(head);
-      for (const key of keys) {
-        const data = Reflect.getMetadata(key, head);
+      const entries = head.vars;
+      if (!entries) continue;
+      for (const [target, key] of entries) {
+        const data = Reflect.getMetadata(key, target);
         if (!data) continue;
         const val = data[key].injectWith as Dependency | null;
         if (val === null) continue;
         const dependency = this.preloadedHeadFiles.get(val);
         if (!dependency) continue;
-        Object.assign(head, {
+        Object.assign(target, {
           [key]: dependency,
         });
       }
@@ -179,6 +180,7 @@ class App extends BaseApp {
           " // ",
           headFile.type
         );
+        if (!headFile.load) continue;
         this.preloadedHeadFiles.set(headFile.type, headFile);
       } catch (e) {
         Logger.internalError((e as Error).message, (e as Error).stack);

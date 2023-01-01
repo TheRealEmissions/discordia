@@ -3,6 +3,7 @@ export enum GeneralEvents {
   ERROR = "error",
   WARN = "warn",
   INFO = "info",
+  USER_ERROR = "user-error",
 }
 
 export enum DiscordEvents {

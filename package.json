@@ -4,7 +4,9 @@
   "description": "The base of all Liam's public, modular bots",
   "main": "out/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "obf": "npx javascript-obfuscator ./out-unobf --output ./out --compact true --config obfuscator.json",
+    "compile": "npx tsc && npm run-script obf"
   },
   "author": "Emissions#2565",
   "license": "ISC",
@@ -13,10 +15,12 @@
     "chalk": "^5.2.0",
     "esm": "^3.2.25",
     "fs-extra-promise": "^1.0.1",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "ts-modular-bot-types": "github:therealemissions/ts-modular-bot-types"
   },
   "devDependencies": {
     "@types/fs-extra-promise": "^1.0.10",
+    "javascript-obfuscator": "^4.0.0",
     "typescript": "^4.9.4"
   },
   "type": "module",

@@ -1,0 +1,4 @@
+{
+  "optionsPreset": "high-obfuscation",
+  "target": "node"
+}

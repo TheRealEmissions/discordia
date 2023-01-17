@@ -148,7 +148,11 @@ class App extends BaseApp {
         return false;
       }
     }
-    head.init();
+    try {
+      await head.init();
+    } catch (error) {
+      return false;
+    }
     this.loaded.push(head);
     return true;
   }

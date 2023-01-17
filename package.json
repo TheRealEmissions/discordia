@@ -16,11 +16,12 @@
     "esm": "^3.2.25",
     "fs-extra-promise": "^1.0.1",
     "reflect-metadata": "^0.1.13",
+    "ts-logger": "github:therealemissions/ts-logger",
     "ts-modular-bot-types": "github:therealemissions/ts-modular-bot-types"
   },
   "devDependencies": {
     "@types/fs-extra-promise": "^1.0.10",
-    "javascript-obfuscator": "^4.0.0",
+    "javascript-obfuscator": "^0.6.2",
     "typescript": "^4.9.4"
   },
   "type": "module",

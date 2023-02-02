@@ -2,7 +2,7 @@
   "name": "ts-bot-base",
   "version": "1.0.0",
   "description": "The base of all Liam's public, modular bots",
-  "main": "out/index.js",
+  "main": "out-unobf/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "obf": "npx javascript-obfuscator ./out-unobf --output ./out --compact true --config obfuscator.json",

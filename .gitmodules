@@ -19,3 +19,6 @@
 [submodule "addons/Events"]
 	path = addons/Events
 	url = https://github.com/TheRealEmissions/ts-modular-bot-addon-events
+[submodule "addons/Discord Responder"]
+  path = addons/Discord Responder
+	url = https://github.com/TheRealEmissions/ts-modular-bot-addon-discord_responder

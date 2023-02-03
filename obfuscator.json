@@ -1,4 +1,5 @@
 {
   "optionsPreset": "high-obfuscation",
-  "target": "node"
+  "target": "node",
+  "compact": true
 }

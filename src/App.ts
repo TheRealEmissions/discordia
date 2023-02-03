@@ -172,6 +172,8 @@ class App extends BaseApp {
     return true;
   }
 
+  // some change to test repo rename
+
   protected async loadHeadFiles(): Promise<boolean> {
     for (const folder of this.preloadedFolders) {
       try {

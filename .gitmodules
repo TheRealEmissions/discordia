@@ -22,3 +22,6 @@
 [submodule "addons/Discord Responder"]
   path = addons/Discord Responder
 	url = https://github.com/TheRealEmissions/ts-modular-bot-addon-discord_responder
+[submodule "addons/General Commands"]
+  path = addons/General Commands
+	url = https://github.com/TheRealEmissions/discordia-generalcommands

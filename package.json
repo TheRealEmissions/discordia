@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "obf": "npx javascript-obfuscator ./out-unobf --output ./out --compact true --config obfuscator.json",
     "compile": "npx tsc && npm run-script obf",
-    "sync": "git submodule init && git submodule sync --recursive && git submodule update --recursive && git submodule foreach git pull origin master && git submodule foreach git submodule init && git submodule foreach git submodule sync --recursive && git submodule foreach git submodule update --recursive"
+    "sync": "git submodule init && git submodule sync --recursive && git submodule update --recursive && git submodule foreach git pull origin master && git submodule foreach git submodule init && git submodule foreach git submodule sync --recursive && git submodule foreach git submodule update --recursive",
+    "pullrecurse": "git pull && git submodule foreach git pull origin master" 
   },
   "author": "Emissions#2565",
   "license": "ISC",

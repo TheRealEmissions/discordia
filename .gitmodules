@@ -25,3 +25,6 @@
 [submodule "addons/General Commands"]
   path = addons/General Commands
 	url = https://github.com/TheRealEmissions/discordia-generalcommands
+[submodule "addons/Database"]
+	path = addons/Database
+	url = https://github.com/therealemissions/discordia-database

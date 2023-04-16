@@ -95,6 +95,7 @@ class App extends BaseApp {
         continue;
       }
     }
+
     return true;
   }
 
@@ -151,6 +152,9 @@ class App extends BaseApp {
     try {
       await head.init();
     } catch (error) {
+      Logger.internalError(`Cannot init ${head.name}!`);
+      Logger.internalError((error as Error).message);
+      Logger.internalError((error as Error).stack || "");
       return false;
     }
     this.loaded.push(head);

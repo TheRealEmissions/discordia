@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "obf": "npx javascript-obfuscator ./out-unobf --output ./out --compact true --config obfuscator.json",
     "compile": "npx tsc && npm run-script obf",
-    "sync": "npm i --save && npm i --save-dev && npm update && git submodule init && git submodule sync --recursive && git submodule update --recursive && git submodule foreach git pull origin master && git submodule foreach git submodule init && git submodule foreach git submodule sync --recursive && git submodule foreach git checkout master && git submodule foreach npm i --save && git submodule foreach npm i --save-dev && git submodule foreach npm update",
+    "sync": "npm i --save && npm i --save-dev && npm update && git submodule init && git submodule sync --recursive && git submodule update --recursive && git submodule foreach git pull origin master && git submodule foreach git submodule init && git submodule foreach git submodule sync --recursive && git submodule foreach npm i --save && git submodule foreach npm i --save-dev && git submodule foreach npm update",
     "pullrecurse": "git pull && git submodule foreach git pull origin master",
     "checkoutrecurse": "git checkout master && git submodule foreach git checkout master"
   },
@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@tsconfig/node18": "^1.0.1",
+    "ada-types": "github:therealemissions/ada-types",
     "chalk": "^5.2.0",
     "esm": "^3.2.25",
     "fs-extra-promise": "^1.0.1",

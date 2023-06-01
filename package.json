@@ -1,7 +1,7 @@
 {
-  "name": "ts-bot-base",
+  "name": "ada",
   "version": "1.0.0",
-  "description": "The base of all Liam's public, modular bots",
+  "description": "Discraft's official Discord Bot: Ada",
   "main": "out-unobf/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -19,8 +19,7 @@
     "esm": "^3.2.25",
     "fs-extra-promise": "^1.0.1",
     "reflect-metadata": "^0.1.13",
-    "ts-logger": "github:therealemissions/ts-logger",
-    "ts-modular-bot-types": "github:therealemissions/ts-modular-bot-types"
+    "ts-logger": "github:therealemissions/ts-logger"
   },
   "devDependencies": {
     "@types/fs-extra-promise": "^1.0.10",

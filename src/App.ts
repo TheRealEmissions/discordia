@@ -5,7 +5,7 @@ import Logger from "./utils/Logger/Logger.js";
 import ChildProcess from "child_process";
 import "reflect-metadata";
 import Path from "path";
-import { Dependency, Dependencies } from "ada-types";
+import { Dependency, Dependencies } from "ts-modular-bot-types";
 
 class App extends BaseApp {
   constructor() {

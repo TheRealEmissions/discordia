@@ -1,6 +1,7 @@
 [submodule "addons/Discord Client"]
 	path = addons/Discord Client
 	url = https://github.com/TheRealEmissions/ts-modular-bot-addon-discord_client
+	branch = ada
 [submodule "src/classes/FileDesign"]
 	path = src/classes/FileDesign
 	url = https://github.com/TheRealEmissions/ts-modular-bot-file-design
@@ -13,15 +14,19 @@
 [submodule "addons/Command Handler"]
 	path = addons/Command Handler
 	url = https://github.com/TheRealEmissions/ts-modular-bot-addon-command_handler
+	branch = ada
 [submodule "addons/Events"]
 	path = addons/Events
 	url = https://github.com/TheRealEmissions/ts-modular-bot-addon-events
+	branch = ada
 [submodule "addons/Discord Responder"]
   path = addons/Discord Responder
 	url = https://github.com/TheRealEmissions/ts-modular-bot-addon-discord_responder
+	branch = ada
 [submodule "addons/Database"]
 	path = addons/Database
 	url = https://github.com/therealemissions/discordia-database
+	branch = ada
 [submodule "addons/Welcome"]
 	path = addons/Welcome
 	url = https://github.com/therealemissions/ada-welcome.git
